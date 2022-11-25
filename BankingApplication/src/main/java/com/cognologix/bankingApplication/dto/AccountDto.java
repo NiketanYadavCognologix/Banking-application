@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.Id;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -17,14 +18,14 @@ import javax.validation.constraints.Size;
 @AllArgsConstructor
 public class AccountDto {
 
-      //    @NotEmpty(message = "Type of account cannot null")
+    @NotEmpty(message = "Type of account cannot null")
     private String accountType;
 
 
-    //    @NotNull(message = "Balence cannot null")
+    @NotNull(message = "Balance cannot null")
     private Double balance;
 
-    //    @NotBlank(message = "Customer cannot blank")
+    @NotNull(message = "Customer cannot blank")
     private Integer customerId;
 
 }
