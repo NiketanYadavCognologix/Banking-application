@@ -8,7 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.cognologix.bankingApplication.services.BankOperationsSevice;
+import com.cognologix.bankingApplication.services.BankOperationsService;
 
 import javax.validation.Valid;
 import javax.websocket.server.PathParam;
@@ -19,7 +19,7 @@ public class BankServiceController {
 
     //bank side operations
     @Autowired
-    BankOperationsSevice bankOperationsSevice;
+    BankOperationsService bankOperationsSevice;
     JSONObject resultSet;
 
     //creating new account by givng account DTO
@@ -41,7 +41,7 @@ public class BankServiceController {
 
     //deposit amount to the given account number
     @PutMapping(value = "/deposit")
-    public ResponseEntity<?> depositeAmount(@PathParam(value = "amount") Double amount, @PathParam(value = "accountNumber") Long accountNumber) {
+    public ResponseEntity<?> depositAmount(@PathParam(value = "amount") Double amount, @PathParam(value = "accountNumber") Long accountNumber) {
         bankOperationsSevice.deposit(accountNumber, amount);
         return new ResponseEntity<String>("Amount deposit successfully...", HttpStatus.OK);
     }
@@ -69,6 +69,8 @@ public class BankServiceController {
         bankOperationsSevice.moneyTransfer(senderAccountNumber, receiverAccountNumber, amount);
         return new ResponseEntity<String>("Amount successfully transfer...", HttpStatus.OK);
     }
+
+
 //	public Customer updateInformation(Customer customerForUpdate);
 //
 //	public Customer showCustomerDetails(Integer accountId);

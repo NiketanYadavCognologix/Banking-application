@@ -1,12 +1,12 @@
 package com.cognologix.bankingApplication.services;
 
 import com.cognologix.bankingApplication.dto.AccountDto;
+import com.cognologix.bankingApplication.dto.TransactionDto;
 import com.cognologix.bankingApplication.entities.Account;
-import com.cognologix.bankingApplication.entities.transactions.BankTransaction;
 
 import java.util.List;
 
-public interface BankOperationsSevice {
+public interface BankOperationsService {
 
     Account createAccount(AccountDto accountDto);
 
@@ -22,6 +22,6 @@ public interface BankOperationsSevice {
 
     void moneyTransfer(Long accountNumberWhoSendMoney,Long accountNumberWhoRecieveMoney,Double ammountForTransfer);
 
-    List<BankTransaction> transactionsOfAccount(Long fromAccountNumber);
+    List<TransactionDto> transactionsOfAccount(Long fromAccountNumber);
 //    Double getCurrentBalance(Long accountNumber);
 }

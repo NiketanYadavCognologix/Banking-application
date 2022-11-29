@@ -1,8 +1,8 @@
 package com.cognologix.bankingApplication.controllers;
 
+import com.cognologix.bankingApplication.dto.TransactionDto;
 import com.cognologix.bankingApplication.entities.Customer;
-import com.cognologix.bankingApplication.entities.transactions.BankTransaction;
-import com.cognologix.bankingApplication.services.BankOperationsSevice;
+import com.cognologix.bankingApplication.services.BankOperationsService;
 import com.cognologix.bankingApplication.services.CustomerOperationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,7 +22,7 @@ public class CustomerServiceController {
     CustomerOperationService customerOperationService;
 
     @Autowired
-    BankOperationsSevice bankOperationsSevice;
+    BankOperationsService bankOperationsSevice;
 
     //create and return created customer by giving parameter to customer
     @PostMapping("/createCustomer")
@@ -40,10 +40,11 @@ public class CustomerServiceController {
 
     //get list of BankTransaction details
     @GetMapping("/statementOfTransaction")
-    public ResponseEntity<List<BankTransaction>> getStatementByAccountNumber(@PathParam("accountNumber") Long accountNumber){
+    public ResponseEntity<List<TransactionDto>> getStatementByAccountNumber(@PathParam("accountNumber") Long accountNumber){
 
         return new ResponseEntity<>(bankOperationsSevice.transactionsOfAccount(accountNumber),HttpStatus.OK);
     }
+
     //returning all customers which is saved in database
     @GetMapping("/getAllCustomers")
     public ResponseEntity<List<Customer>> getAllCustomers(){
