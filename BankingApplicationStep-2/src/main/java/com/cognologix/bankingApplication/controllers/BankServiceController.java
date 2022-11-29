@@ -12,6 +12,7 @@ import com.cognologix.bankingApplication.services.BankOperationsService;
 
 import javax.validation.Valid;
 import javax.websocket.server.PathParam;
+import java.util.List;
 
 @RestController
 @RequestMapping("/banking")
@@ -30,14 +31,25 @@ public class BankServiceController {
 
     }
 
-    //deleteing given id customer
-//    @DeleteMapping("/delete")
-//    public ResponseEntity<?> deleteCustomerById(@PathParam(value = "id") Integer id) {
-//        List<Account> deletedAccounts = bankOperationsSevice.deleteCustomer(id);
-//        resultSet = new JSONObject();
-//        resultSet.put("Customer deleted successfully....", deletedAccounts);
-//        return new ResponseEntity<>(resultSet, HttpStatus.OK);
-//    }
+    //deactivating given account by account number
+    @PutMapping("/deactivateAccount")
+    public ResponseEntity<?> deactivateAccountByAccountNumber(@PathParam(value = "accountNumber") Long accountNumber) {
+        bankOperationsSevice.deactivateAccountByAccountNumber(accountNumber);
+        return new ResponseEntity<>("Deactivated " + accountNumber + " number account", HttpStatus.OK);
+    }
+
+    //activating given account by account number
+    @PutMapping("/activateAccount")
+    public ResponseEntity<?> activateAccountBYAccountNumber(@PathParam(value = "accountNumber") Long accountNumber) {
+        bankOperationsSevice.activateAccountByAccountNumber(accountNumber);
+        return new ResponseEntity<>("Activated " + accountNumber + " number account", HttpStatus.OK);
+    }
+
+    //get all deactivated accounts
+    @GetMapping("/getDeactivatingAccounts")
+    public ResponseEntity<List<Account>> getListOfDeactivatingAccounts() {
+        return new ResponseEntity<>(bankOperationsSevice.getAllDeactivatedAccounts(),HttpStatus.OK);
+    }
 
     //deposit amount to the given account number
     @PutMapping(value = "/deposit")

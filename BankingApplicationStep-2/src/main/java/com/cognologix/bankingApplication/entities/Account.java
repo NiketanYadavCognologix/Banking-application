@@ -18,18 +18,27 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 @XmlRootElement
+@Table(name = "account")
 public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "accountID")
     private Integer accountID;
 
-    @NotEmpty(message = "Type of account cannot null")
+    @NotEmpty(message = "Please enter status")
+    @Column(name = "status")
+    private String status;
+
+    @NotEmpty(message = "Please enter account type, cannot put empty Account type")
+    @Column(name = "accountType")
     private String accountType;
 
-    @NotNull(message = "Account number cannot blank")
+    @NotNull(message = "Account number cannot null")
+    @Column(name = "accountNumber")
     private Long accountNumber;
 
     @NotNull(message = "Balance cannot null")
+    @Column(name = "balance")
     private Double balance;
 
     @OneToOne

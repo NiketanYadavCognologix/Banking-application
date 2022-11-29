@@ -18,29 +18,37 @@ import java.util.List;
 @XmlRootElement
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "customer")
 public class Customer {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "customerId")
 	private Integer customerId;
 
+	@Column(name = "customerName")
 	@NotEmpty(message = "Account holder name cannot blank")
 	private String customerName;
 
+	@Column(name = "dateOfBirth")
 	@NotNull(message = "Date of birth cannot blank")
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate dateOfBirth;
 
+	@Column(name = "adharNumber")
 	@NotEmpty(message = "Adhar number cannot blank")
 	@Size(min = 12, max = 12, message = "Adhar number should be 12 character")
 	private String adharNumber;
 
+	@Column(name = "panCardNumber")
 	@NotEmpty(message = "PAN number cannot blank")
 	private String panCardNumber;
 
+	@Column(name = "emailId")
 	@Email(message = "Email id cannot blank")
 	private String emailId;
 
+	@Column(name = "gender")
 	@NotEmpty(message = "Gender cannot blank")
 	private String gender;
 

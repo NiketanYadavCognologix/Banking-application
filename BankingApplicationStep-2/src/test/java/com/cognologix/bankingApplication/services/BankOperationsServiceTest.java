@@ -12,20 +12,25 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
-//@RunWith(MockitoJUnitRunner.class)
+@RunWith(MockitoJUnitRunner.class)
+@SpringBootTest
 class BankOperationsServiceTest {
 
 
+//    @MockBean
     @Mock
     private BankOperationsService bankOperationsSevice;
 
-    @Mock
+    @MockBean
     private CustomerOperationService customerOperationService;
 
     @Mock
@@ -39,9 +44,10 @@ class BankOperationsServiceTest {
 //    Account accountInstance = new Account(2, "saavings", 1001L, 1000.00, customer);
     AccountDto accountDto = new AccountDto(1,
             "savings", 1000.0, 1);
-    Account account = new Account(accountDto.getAccountID(), accountDto.getAccountType(),
+    Account account = new Account(accountDto.getAccountID(),"Activate", accountDto.getAccountType(),
             1000L, accountDto.getBalance(), customer);
 
+//    Account account=new Account()
 //    AccountDto accountDto2 = new AccountDto(accountInstance.getAccountID(),
 //            accountInstance.getAccountType(), accountInstance.getBalance(), accountInstance.getCustomer().getCustomerId());
 
@@ -58,11 +64,11 @@ class BankOperationsServiceTest {
         MockitoAnnotations.openMocks(this);
     }
 
-    @Before
-    public void setUp() {
+//    @BeforeEach
+//    public void setUp() {
 //        customer1 = customerOperationService.createNewCustomer(customer);
 //        account1 = bankOperationsSevice.createAccount(accountDto);
-    }
+//    }
 
     @Test
     void createAccount() {
@@ -80,9 +86,9 @@ class BankOperationsServiceTest {
 
     @Test
     void deposit() {
-        setUp();
+//        setUp();
        Account account2 = bankOperationsSevice.getAccountByAccountNumber(1000L);
-        System.out.println(account1);
+        System.out.println(account2);
 //        Double expectedBalance = account.getBalance()+300;
 //        Account account2=bankOperationsSevice.getAccountByAccountNumber(1000L);
 //        bankOperationsSevice.deposit(account.getAccountNumber(),200.0);

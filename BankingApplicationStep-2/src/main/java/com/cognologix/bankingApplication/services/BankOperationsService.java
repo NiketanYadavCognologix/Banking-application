@@ -10,10 +10,6 @@ public interface BankOperationsService {
 
     Account createAccount(AccountDto accountDto);
 
-//    List<Account> getAllAccountsForCustomers(Integer customerId);
-
-//    List<Account> deleteCustomer(Integer customerId);
-
     Account getAccountByAccountNumber(Long accountId);
 
     void deposit(Long accountNumber, Double ammount);
@@ -23,5 +19,10 @@ public interface BankOperationsService {
     void moneyTransfer(Long accountNumberWhoSendMoney,Long accountNumberWhoRecieveMoney,Double ammountForTransfer);
 
     List<TransactionDto> transactionsOfAccount(Long fromAccountNumber);
-//    Double getCurrentBalance(Long accountNumber);
+
+    void deactivateAccountByAccountNumber(Long accountNumber);
+
+    void activateAccountByAccountNumber(Long accountNumber);
+
+    List<Account> getAllDeactivatedAccounts();
 }
