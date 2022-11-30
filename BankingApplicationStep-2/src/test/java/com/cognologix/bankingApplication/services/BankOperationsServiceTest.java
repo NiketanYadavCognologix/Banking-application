@@ -27,7 +27,7 @@ class BankOperationsServiceTest {
 
 
 //    @MockBean
-    @Mock
+//    @Mock
     private BankOperationsService bankOperationsSevice;
 
     @MockBean
@@ -56,7 +56,9 @@ class BankOperationsServiceTest {
 
 //    @Before
 //    public void init() {
-//        MockitoAnnotations.openMocks(this);
+//       // MockitoAnnotations.openMocks(this);
+//        Account account = new Account(accountDto.getAccountID(),"Activate", accountDto.getAccountType(),
+//                1000L, accountDto.getBalance(), customer);
 //    }
 
     @BeforeEach
@@ -68,13 +70,20 @@ class BankOperationsServiceTest {
 //    public void setUp() {
 //        customer1 = customerOperationService.createNewCustomer(customer);
 //        account1 = bankOperationsSevice.createAccount(accountDto);
+//        System.out.println(account1);
 //    }
 
     @Test
     void createAccount() {
 //        setUp();
-        when(bankOperationsSevice.createAccount(accountDto)).thenReturn(account);
-        assertEquals((bankOperationsSevice.createAccount(accountDto)), account);
+        System.out.println("**********1****************");
+        customerOperationService.createNewCustomer(customer);
+        System.out.println("**********2****************");
+        account1 = bankOperationsSevice.createAccount(accountDto);
+        System.out.println("**********3****************");
+        System.out.println(account1);
+//        when(bankOperationsSevice.createAccount(accountDto)).thenReturn(account);
+//        assertEquals(account,bankOperationsSevice.);
     }
 
     @Test

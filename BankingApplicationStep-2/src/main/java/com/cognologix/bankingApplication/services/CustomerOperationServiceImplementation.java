@@ -35,7 +35,7 @@ public class CustomerOperationServiceImplementation implements CustomerOperation
             });
             return customerRepository.save(customer);
         } catch (CustomerAlreadyExistException exception) {
-            throw new RuntimeException(exception.getMessage());
+            throw new CustomerAlreadyExistException(exception.getMessage());
         }
     }
 
@@ -49,7 +49,7 @@ public class CustomerOperationServiceImplementation implements CustomerOperation
             }
             return bankAccountRepository.findByAccountNumberEquals(accountNumber).getBalance();
         } catch (AccountNotAvailableException exception) {
-            throw new RuntimeException(exception.getMessage());
+            throw new AccountNotAvailableException(exception.getMessage());
         }
 
     }

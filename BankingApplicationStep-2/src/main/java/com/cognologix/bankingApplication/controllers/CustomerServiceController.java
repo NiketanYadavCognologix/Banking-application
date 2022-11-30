@@ -22,10 +22,12 @@ public class CustomerServiceController {
     CustomerOperationService customerOperationService;
 
     @Autowired
-    BankOperationsService bankOperationsSevice;
+    BankOperationsService bankOperationsService;
 
     //create and return created customer by giving parameter to customer
-    @PostMapping("/createCustomer")
+    @PostMapping(value = "/createCustomer",
+            consumes = { "application/json", "application/xml" },
+            produces = {"application/json", "application/xml" })
     public ResponseEntity<Customer> createNewAccount(@Valid @RequestBody Customer customer) {
         Customer createdCustomer = customerOperationService.createNewCustomer(customer);
         return new ResponseEntity<Customer>(createdCustomer, HttpStatus.CREATED);
@@ -42,7 +44,7 @@ public class CustomerServiceController {
     @GetMapping("/statementOfTransaction")
     public ResponseEntity<List<TransactionDto>> getStatementByAccountNumber(@PathParam("accountNumber") Long accountNumber){
 
-        return new ResponseEntity<>(bankOperationsSevice.transactionsOfAccount(accountNumber),HttpStatus.OK);
+        return new ResponseEntity<>(bankOperationsService.transactionsOfAccount(accountNumber),HttpStatus.OK);
     }
 
     //returning all customers which is saved in database

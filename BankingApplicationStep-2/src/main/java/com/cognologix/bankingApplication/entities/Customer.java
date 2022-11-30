@@ -45,7 +45,7 @@ public class Customer {
 	private String panCardNumber;
 
 	@Column(name = "emailId")
-	@Email(message = "Email id cannot blank")
+	@Email(message = "Please enter valid email id....")
 	private String emailId;
 
 	@Column(name = "gender")

@@ -1,7 +1,5 @@
 package com.cognologix.bankingApplication.dto;
 
-import com.cognologix.bankingApplication.entities.Account;
-import com.cognologix.bankingApplication.entities.Customer;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,15 +7,15 @@ import lombok.NoArgsConstructor;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
 
 //this account dto is taken by bank and return created account of customer
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@XmlRootElement
 public class AccountDto {
 
     @Id

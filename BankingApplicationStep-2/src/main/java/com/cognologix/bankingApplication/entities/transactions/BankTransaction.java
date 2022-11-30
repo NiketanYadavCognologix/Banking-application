@@ -16,7 +16,6 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@XmlRootElement
 @Table(name = "bankTransaction")
 public class BankTransaction {
 
