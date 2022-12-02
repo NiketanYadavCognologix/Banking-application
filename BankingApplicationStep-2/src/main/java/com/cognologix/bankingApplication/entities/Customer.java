@@ -1,7 +1,15 @@
 package com.cognologix.bankingApplication.entities;
 
-import javax.persistence.*;
-import javax.validation.constraints.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import lombok.AllArgsConstructor;
@@ -9,9 +17,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import java.text.DateFormat;
 import java.time.LocalDate;
-import java.util.List;
 
 @Data
 @Entity
@@ -35,16 +41,17 @@ public class Customer {
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate dateOfBirth;
 
-	@Column(name = "adharNumber")
+	@Column(name = "adharNumber",unique = true)
 	@NotEmpty(message = "Adhar number cannot blank")
 	@Size(min = 12, max = 12, message = "Adhar number should be 12 character")
 	private String adharNumber;
 
-	@Column(name = "panCardNumber")
+	@Column(name = "panCardNumber",unique = true)
 	@NotEmpty(message = "PAN number cannot blank")
+	@Size(min = 10, max = 10, message = "Adhar number should be 10 character...")
 	private String panCardNumber;
 
-	@Column(name = "emailId")
+	@Column(name = "emailId",unique = true)
 	@Email(message = "Please enter valid email id....")
 	private String emailId;
 

@@ -1,19 +1,27 @@
 package com.cognologix.bankingApplication.controllers;
 
 import com.cognologix.bankingApplication.dto.AccountDto;
-import com.cognologix.bankingApplication.dto.CreatedAccountResponse;
-import com.cognologix.bankingApplication.entities.Account;
-import org.json.JSONObject;
+import com.cognologix.bankingApplication.dto.responsesForBankOperations.ActivateAccountResponse;
+import com.cognologix.bankingApplication.dto.responsesForBankOperations.CreatedAccountResponse;
+import com.cognologix.bankingApplication.dto.responsesForBankOperations.DeactivateAccountResponse;
+import com.cognologix.bankingApplication.dto.responsesForBankOperations.DeactivatedAccountsResponse;
+import com.cognologix.bankingApplication.dto.responsesForBankOperations.DepositAmountResponse;
+import com.cognologix.bankingApplication.dto.responsesForBankOperations.TransferAmountResponse;
+import com.cognologix.bankingApplication.dto.responsesForBankOperations.WithdrawAmountResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
 
 import com.cognologix.bankingApplication.services.BankOperationsService;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 import javax.websocket.server.PathParam;
-import java.util.List;
 
 @RestController
 @RequestMapping("/banking")
@@ -24,77 +32,58 @@ public class BankServiceController {
     BankOperationsService bankOperationsService;
 
     //creating new account by giving account DTO
-    @PostMapping(value = "/createAccount",
-            consumes = {"application/json", "application/xml"},
-            produces = {"application/json", "application/xml"})
-    public ResponseEntity<?> createNewAccount(@Valid @RequestBody AccountDto accountDto) {
+    @PostMapping(value = "/createAccount", consumes = {"application/json", "application/xml"})
+    public ResponseEntity<CreatedAccountResponse> createNewAccount(@Valid @RequestBody AccountDto accountDto) {
         CreatedAccountResponse createdAccountResponse = bankOperationsService.createAccount(accountDto);
-//        System.out.println(createdAccountResponse);
-//        JSONObject createdAccountJSON = new JSONObject();
-//        createdAccountJSON.put("Account created Successfully....", bankOperationsService.createAccount(accountDto));
-//        System.out.println(createdAccountJSON);
-//        return new ResponseEntity<JSONObject>(createdAccountJSON.toMap(),HttpStatus.OK);
-        return new ResponseEntity<>(createdAccountResponse,HttpStatus.OK);
-
+        HttpStatus httpStatus = createdAccountResponse.getSuccess() ? HttpStatus.CREATED : HttpStatus.BAD_REQUEST;
+        return new ResponseEntity<>(createdAccountResponse, httpStatus);
     }
 
     //deactivating given account by account number
     @PutMapping("/deactivateAccount")
-    public ResponseEntity<?> deactivateAccountByAccountNumber(@PathParam(value = "accountNumber") Long accountNumber) {
-        bankOperationsService.deactivateAccountByAccountNumber(accountNumber);
-        return new ResponseEntity<>("Deactivated " + accountNumber + " number account", HttpStatus.OK);
+    public ResponseEntity<DeactivateAccountResponse> deactivateAccountByAccountNumber(@PathParam(value = "accountNumber") Long accountNumber) {
+        DeactivateAccountResponse deactivateAccountResponse = bankOperationsService.deactivateAccountByAccountNumber(accountNumber);
+        HttpStatus httpStatus = deactivateAccountResponse.getSuccess() ? HttpStatus.OK : HttpStatus.BAD_REQUEST;
+        return new ResponseEntity<>(deactivateAccountResponse, httpStatus);
     }
 
     //activating given account by account number
     @PutMapping("/activateAccount")
-    public ResponseEntity<?> activateAccountBYAccountNumber(@PathParam(value = "accountNumber") Long accountNumber) {
-        bankOperationsService.activateAccountByAccountNumber(accountNumber);
-        return new ResponseEntity<>("Activated " + accountNumber + " number account", HttpStatus.OK);
+    public ResponseEntity<ActivateAccountResponse> activateAccountBYAccountNumber(@PathParam(value = "accountNumber") Long accountNumber) {
+        ActivateAccountResponse activateAccountResponse = bankOperationsService.activateAccountByAccountNumber(accountNumber);
+        HttpStatus httpStatus = activateAccountResponse.getSuccess() ? HttpStatus.OK : HttpStatus.BAD_REQUEST;
+        return new ResponseEntity<>(activateAccountResponse, httpStatus);
     }
 
     //get all deactivated accounts
     @GetMapping("/getDeactivatingAccounts")
-    public ResponseEntity<List<Account>> getListOfDeactivatingAccounts() {
+    public ResponseEntity<DeactivatedAccountsResponse> getListOfDeactivatingAccounts() {
+        DeactivatedAccountsResponse deactivatedAccounts = bankOperationsService.getAllDeactivatedAccounts();
+        HttpStatus httpStatus = deactivatedAccounts.getSuccess() ? HttpStatus.OK : HttpStatus.BAD_REQUEST;
         return new ResponseEntity<>(bankOperationsService.getAllDeactivatedAccounts(), HttpStatus.OK);
     }
 
     //deposit amount to the given account number
     @PutMapping(value = "/deposit")
-    public ResponseEntity<?> depositAmount(@PathParam(value = "amount") Double amount, @PathParam(value = "accountNumber") Long accountNumber) {
-        String transactionMessage = bankOperationsService.deposit(accountNumber, amount);
-        return new ResponseEntity<String>(transactionMessage, HttpStatus.OK);
+    public ResponseEntity<DepositAmountResponse> depositAmount(@PathParam(value = "amount") Double amount, @PathParam(value = "accountNumber") Long accountNumber) {
+        DepositAmountResponse depositAmountResponse = bankOperationsService.deposit(accountNumber, amount);
+        HttpStatus httpStatus = depositAmountResponse.getSuccess() ? HttpStatus.OK : HttpStatus.BAD_REQUEST;
+        return new ResponseEntity<>(depositAmountResponse, httpStatus);
     }
 
     //withdraw amount to the given account number
     @PutMapping(value = "/withdraw")
-    public ResponseEntity<?> withdrawalAmount(@PathParam(value = "amount") Double amount, @PathParam(value = "accountNumber") Long accountNumber) {
-        String transactionMessage = bankOperationsService.withdraw(accountNumber, amount);
-        return new ResponseEntity<String>(transactionMessage, HttpStatus.OK);
+    public ResponseEntity<WithdrawAmountResponse> withdrawAmount(@PathParam(value = "amount") Double amount, @PathParam(value = "accountNumber") Long accountNumber) {
+        WithdrawAmountResponse withdrawAmountResponse = bankOperationsService.withdraw(accountNumber, amount);
+        HttpStatus httpStatus = withdrawAmountResponse.getSuccess() ? HttpStatus.OK : HttpStatus.BAD_REQUEST;
+        return new ResponseEntity<>(withdrawAmountResponse, httpStatus);
     }
-
-    //return accounts list of single customer by id
-//    @GetMapping("/getAllByCustomerID/{customerID}")
-//    public ResponseEntity<?> getAllAccounts(@PathVariable Integer customerID) {
-//        List<Account> accounts = bankOperationsSevice.getAllAccountsForCustomers(customerID);
-//        return new ResponseEntity<List<Account>>(accounts, HttpStatus.OK);
-//    }
-
 
     //transferring amount from one account to another account
     @PutMapping("/transfer")
-    public ResponseEntity<?> moneyTransfer(@PathParam(value = "senderAccountNumber") Long senderAccountNumber,
-                                           @PathParam(value = "receiverAccountNumber") Long receiverAccountNumber,
-                                           @PathParam(value = "amount") Double amount) {
-        String transactionMessage = bankOperationsService.moneyTransfer(senderAccountNumber, receiverAccountNumber, amount);
-        return new ResponseEntity<String>(transactionMessage, HttpStatus.OK);
+    public ResponseEntity<TransferAmountResponse> moneyTransfer(@PathParam(value = "senderAccountNumber") Long senderAccountNumber, @PathParam(value = "receiverAccountNumber") Long receiverAccountNumber, @PathParam(value = "amount") Double amount) {
+        TransferAmountResponse transferAmountResponse = bankOperationsService.moneyTransfer(senderAccountNumber, receiverAccountNumber, amount);
+        HttpStatus httpStatus = transferAmountResponse.getSuccess() ? HttpStatus.OK : HttpStatus.BAD_REQUEST;
+        return new ResponseEntity<>(transferAmountResponse, httpStatus);
     }
-
-
-    @GetMapping("/found")
-    public ResponseEntity<Account> founResponseEntity() {
-        return new ResponseEntity<Account>((bankOperationsService.foundedAccount(1000111L)), HttpStatus.OK);
-    }
-//	public Customer updateInformation(Customer customerForUpdate);
-//
-//	public Customer showCustomerDetails(Integer accountId);
 }

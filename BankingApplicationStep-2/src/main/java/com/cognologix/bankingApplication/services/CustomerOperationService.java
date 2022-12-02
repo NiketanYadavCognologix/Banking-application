@@ -1,12 +1,15 @@
 package com.cognologix.bankingApplication.services;
 
-import com.cognologix.bankingApplication.dto.CustomerDto;
+import com.cognologix.bankingApplication.dto.responsesForCustomerOperations.BalanceInquiryResponse;
+import com.cognologix.bankingApplication.dto.responsesForCustomerOperations.CreateCustomerResponse;
+import com.cognologix.bankingApplication.dto.responsesForCustomerOperations.CustomerUpdateResponse;
+import com.cognologix.bankingApplication.dto.responsesForCustomerOperations.GetAllCustomerResponse;
 import com.cognologix.bankingApplication.entities.Customer;
 
-import java.util.List;
-
 public interface CustomerOperationService {
-    Customer createNewCustomer(Customer customer);
-    Double getAccountBalance(Long accountNumber);
-    List<Customer> getAllCustomers();
+    CreateCustomerResponse createNewCustomer(Customer customer);
+    BalanceInquiryResponse getAccountBalance(Long accountNumber);
+    GetAllCustomerResponse getAllCustomers();
+
+    CustomerUpdateResponse updateCustomer(Customer customer);
 }

@@ -1,11 +1,15 @@
 package com.cognologix.bankingApplication.services;
 
 import com.cognologix.bankingApplication.dto.AccountDto;
-import com.cognologix.bankingApplication.dto.CreatedAccountResponse;
-import com.cognologix.bankingApplication.dto.TransactionDto;
+import com.cognologix.bankingApplication.dto.responsesForBankOperations.ActivateAccountResponse;
+import com.cognologix.bankingApplication.dto.responsesForBankOperations.CreatedAccountResponse;
+import com.cognologix.bankingApplication.dto.responsesForBankOperations.DeactivateAccountResponse;
+import com.cognologix.bankingApplication.dto.responsesForBankOperations.DeactivatedAccountsResponse;
+import com.cognologix.bankingApplication.dto.responsesForBankOperations.DepositAmountResponse;
+import com.cognologix.bankingApplication.dto.responsesForBankOperations.TransferAmountResponse;
+import com.cognologix.bankingApplication.dto.responsesForBankOperations.WithdrawAmountResponse;
+import com.cognologix.bankingApplication.dto.responsesForCustomerOperations.TransactionStatementResponse;
 import com.cognologix.bankingApplication.entities.Account;
-
-import java.util.List;
 
 public interface BankOperationsService {
 
@@ -13,18 +17,17 @@ public interface BankOperationsService {
 
     Account getAccountByAccountNumber(Long accountId);
 
-    String deposit(Long accountNumber, Double ammount);
+    DepositAmountResponse deposit(Long accountNumber, Double amount);
 
-    String withdraw(Long accountNumber, Double ammount);
+    WithdrawAmountResponse withdraw(Long accountNumber, Double amount);
 
-    String moneyTransfer(Long accountNumberWhoSendMoney,Long accountNumberWhoRecieveMoney,Double ammountForTransfer);
+    TransferAmountResponse moneyTransfer(Long accountNumberWhoSendMoney,Long accountNumberWhoReceiveMoney,Double amountForTransfer);
 
-    List<TransactionDto> transactionsOfAccount(Long fromAccountNumber);
+    TransactionStatementResponse transactionsOfAccount(Long fromAccountNumber);
 
-    void deactivateAccountByAccountNumber(Long accountNumber);
+    DeactivateAccountResponse deactivateAccountByAccountNumber(Long accountNumber);
 
-    void activateAccountByAccountNumber(Long accountNumber);
+    ActivateAccountResponse activateAccountByAccountNumber(Long accountNumber);
 
-    List<Account> getAllDeactivatedAccounts();
-    Account foundedAccount(Long accountNumber);
+    DeactivatedAccountsResponse getAllDeactivatedAccounts();
 }

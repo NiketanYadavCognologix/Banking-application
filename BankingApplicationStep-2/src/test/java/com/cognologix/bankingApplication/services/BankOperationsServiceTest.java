@@ -1,20 +1,18 @@
 package com.cognologix.bankingApplication.services;
 
+import com.cognologix.bankingApplication.dao.BankAccountRepository;
+import com.cognologix.bankingApplication.dao.CustomerRepository;
 import com.cognologix.bankingApplication.dto.AccountDto;
-import com.cognologix.bankingApplication.dto.CustomerDto;
+import com.cognologix.bankingApplication.dto.responsesForBankOperations.CreatedAccountResponse;
 import com.cognologix.bankingApplication.entities.Account;
 import com.cognologix.bankingApplication.entities.Customer;
-import com.cognologix.bankingApplication.globleObjectLists.DataSoucrce;
-import org.junit.Before;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.time.LocalDate;
 
@@ -26,18 +24,20 @@ import static org.mockito.Mockito.when;
 class BankOperationsServiceTest {
 
 
-//    @MockBean
-//    @Mock
-    private BankOperationsService bankOperationsSevice;
-
-    @MockBean
-    private CustomerOperationService customerOperationService;
+    @Mock
+    BankAccountRepository bankAccountRepository;
 
     @Mock
-    private DataSoucrce dataSoucrce;
+    CustomerRepository customerRepository;
+    @Mock
+    private BankOperationsService bankOperationsSevice;
 
-    Customer customer = new Customer(1, "Niketan", LocalDate.of(1998, 10, 23),
-            "123456789012", "123456789", "niketanyadav@gmail.com", "Male");
+    @Mock
+    private CustomerOperationService customerOperationService;
+
+
+    Customer customer = new Customer(1, "Poorv", LocalDate.of(1998, 10, 23),
+            "123456799012", "1Poo456789", "niketanya33dav@gmail.com", "Female");
 //    CustomerDto customerDto = new CustomerDto(1, "Niketan", LocalDate.of(1998, 10, 23),
 //            "123456789012", "123456789", "niketanyadav@gmail.com", "Male");
 //
@@ -52,7 +52,7 @@ class BankOperationsServiceTest {
 //            accountInstance.getAccountType(), accountInstance.getBalance(), accountInstance.getCustomer().getCustomerId());
 
     Customer customer1;
-    Account account1;
+    CreatedAccountResponse actualCreatedREsponse;
 
 //    @Before
 //    public void init() {
@@ -69,19 +69,20 @@ class BankOperationsServiceTest {
 //    @BeforeEach
 //    public void setUp() {
 //        customer1 = customerOperationService.createNewCustomer(customer);
-//        account1 = bankOperationsSevice.createAccount(accountDto);
-//        System.out.println(account1);
+//        actualCreatedREsponse = bankOperationsSevice.createAccount(accountDto);
+//        System.out.println(actualCreatedREsponse);
 //    }
 
     @Test
     void createAccount() {
 //        setUp();
         System.out.println("**********1****************");
-        customerOperationService.createNewCustomer(customer);
+//       Customer customer2= customerOperationService.createNewCustomer(customer);
+//        System.out.println(customer2+"-------------->1");
         System.out.println("**********2****************");
-        account1 = bankOperationsSevice.createAccount(accountDto);
+        actualCreatedREsponse = bankOperationsSevice.createAccount(accountDto);
         System.out.println("**********3****************");
-        System.out.println(account1);
+        System.out.println(actualCreatedREsponse);
 //        when(bankOperationsSevice.createAccount(accountDto)).thenReturn(account);
 //        assertEquals(account,bankOperationsSevice.);
     }

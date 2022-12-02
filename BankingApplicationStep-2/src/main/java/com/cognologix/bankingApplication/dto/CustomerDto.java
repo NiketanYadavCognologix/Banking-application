@@ -10,8 +10,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.*;
 import java.time.LocalDate;
-import java.util.List;
-import java.util.Map;
 
 @Data
 @AllArgsConstructor
