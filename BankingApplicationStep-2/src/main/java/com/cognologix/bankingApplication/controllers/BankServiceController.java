@@ -1,13 +1,13 @@
 package com.cognologix.bankingApplication.controllers;
 
 import com.cognologix.bankingApplication.dto.AccountDto;
-import com.cognologix.bankingApplication.dto.responsesForBankOperations.ActivateAccountResponse;
-import com.cognologix.bankingApplication.dto.responsesForBankOperations.CreatedAccountResponse;
-import com.cognologix.bankingApplication.dto.responsesForBankOperations.DeactivateAccountResponse;
-import com.cognologix.bankingApplication.dto.responsesForBankOperations.DeactivatedAccountsResponse;
-import com.cognologix.bankingApplication.dto.responsesForBankOperations.DepositAmountResponse;
-import com.cognologix.bankingApplication.dto.responsesForBankOperations.TransferAmountResponse;
-import com.cognologix.bankingApplication.dto.responsesForBankOperations.WithdrawAmountResponse;
+import com.cognologix.bankingApplication.dto.Responses.bankOperations.ActivateAccountResponse;
+import com.cognologix.bankingApplication.dto.Responses.bankOperations.CreatedAccountResponse;
+import com.cognologix.bankingApplication.dto.Responses.bankOperations.DeactivateAccountResponse;
+import com.cognologix.bankingApplication.dto.Responses.bankOperations.DeactivatedAccountsResponse;
+import com.cognologix.bankingApplication.dto.Responses.bankOperations.DepositAmountResponse;
+import com.cognologix.bankingApplication.dto.Responses.bankOperations.TransferAmountResponse;
+import com.cognologix.bankingApplication.dto.Responses.bankOperations.WithdrawAmountResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

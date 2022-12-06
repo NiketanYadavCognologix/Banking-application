@@ -1,10 +1,10 @@
 package com.cognologix.bankingApplication.controllers;
 
-import com.cognologix.bankingApplication.dto.responsesForCustomerOperations.BalanceInquiryResponse;
-import com.cognologix.bankingApplication.dto.responsesForCustomerOperations.CreateCustomerResponse;
-import com.cognologix.bankingApplication.dto.responsesForCustomerOperations.CustomerUpdateResponse;
-import com.cognologix.bankingApplication.dto.responsesForCustomerOperations.GetAllCustomerResponse;
-import com.cognologix.bankingApplication.dto.responsesForCustomerOperations.TransactionStatementResponse;
+import com.cognologix.bankingApplication.dto.Responses.CustomerOperations.BalanceInquiryResponse;
+import com.cognologix.bankingApplication.dto.Responses.CustomerOperations.CreateCustomerResponse;
+import com.cognologix.bankingApplication.dto.Responses.CustomerOperations.CustomerUpdateResponse;
+import com.cognologix.bankingApplication.dto.Responses.CustomerOperations.GetAllCustomerResponse;
+import com.cognologix.bankingApplication.dto.Responses.CustomerOperations.TransactionStatementResponse;
 import com.cognologix.bankingApplication.entities.Customer;
 import com.cognologix.bankingApplication.services.BankOperationsService;
 import com.cognologix.bankingApplication.services.CustomerOperationService;

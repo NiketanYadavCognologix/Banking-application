@@ -1,8 +1,7 @@
-package com.cognologix.bankingApplication.dto.responsesForCustomerOperations;
+package com.cognologix.bankingApplication.dto.Responses.CustomerOperations;
 
-import com.cognologix.bankingApplication.dto.BaseResponse;
+import com.cognologix.bankingApplication.dto.Responses.BaseResponse;
 import com.cognologix.bankingApplication.dto.TransactionDto;
-import com.cognologix.bankingApplication.entities.transactions.BankTransaction;
 
 import java.util.List;
 

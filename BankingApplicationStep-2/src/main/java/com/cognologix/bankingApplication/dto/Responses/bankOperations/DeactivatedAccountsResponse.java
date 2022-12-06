@@ -1,6 +1,6 @@
-package com.cognologix.bankingApplication.dto.responsesForBankOperations;
+package com.cognologix.bankingApplication.dto.Responses.bankOperations;
 
-import com.cognologix.bankingApplication.dto.BaseResponse;
+import com.cognologix.bankingApplication.dto.Responses.BaseResponse;
 import com.cognologix.bankingApplication.entities.Account;
 
 import java.util.List;

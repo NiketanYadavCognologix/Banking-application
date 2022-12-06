@@ -24,8 +24,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "accountID")
-    private Integer accountID;
+    @Column(name = "accountId")
+    private Integer accountId;
 
     @NotEmpty(message = "Please enter status")
     @Column(name = "status")

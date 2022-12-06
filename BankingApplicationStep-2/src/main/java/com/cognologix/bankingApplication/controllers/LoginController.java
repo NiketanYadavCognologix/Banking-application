@@ -16,7 +16,7 @@ import java.util.Map;
 public class LoginController {
 
     @Autowired
-    BankOperationsService bankOperationsSevice;
+    BankOperationsService bankOperationsService;
     public ResponseEntity<?> loginToAccount(@RequestBody Map<String, String> loginCredentials) {
         JSONObject signInResult = new JSONObject();
 //		signInResult.put("Sucessfully login..,",bankOperationsSevice.loginByCustomer(loginCredentials));

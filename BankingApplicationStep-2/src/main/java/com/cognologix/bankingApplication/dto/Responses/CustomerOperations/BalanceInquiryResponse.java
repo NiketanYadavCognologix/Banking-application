@@ -1,6 +1,6 @@
-package com.cognologix.bankingApplication.dto.responsesForCustomerOperations;
+package com.cognologix.bankingApplication.dto.Responses.CustomerOperations;
 
-import com.cognologix.bankingApplication.dto.BaseResponse;
+import com.cognologix.bankingApplication.dto.Responses.BaseResponse;
 
 public class BalanceInquiryResponse extends BaseResponse{
     public BalanceInquiryResponse(Boolean success,String message) {

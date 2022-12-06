@@ -1,18 +1,12 @@
-package com.cognologix.bankingApplication.services;
+package com.cognologix.bankingApplication.services.implementation;
 
 import com.cognologix.bankingApplication.dao.BankAccountRepository;
 import com.cognologix.bankingApplication.dao.CustomerRepository;
 import com.cognologix.bankingApplication.dao.TransactionRepository;
 import com.cognologix.bankingApplication.dto.AccountDto;
+import com.cognologix.bankingApplication.dto.Responses.bankOperations.*;
 import com.cognologix.bankingApplication.dto.TransactionDto;
-import com.cognologix.bankingApplication.dto.responsesForBankOperations.ActivateAccountResponse;
-import com.cognologix.bankingApplication.dto.responsesForBankOperations.CreatedAccountResponse;
-import com.cognologix.bankingApplication.dto.responsesForBankOperations.DeactivateAccountResponse;
-import com.cognologix.bankingApplication.dto.responsesForBankOperations.DeactivatedAccountsResponse;
-import com.cognologix.bankingApplication.dto.responsesForBankOperations.DepositAmountResponse;
-import com.cognologix.bankingApplication.dto.responsesForBankOperations.TransferAmountResponse;
-import com.cognologix.bankingApplication.dto.responsesForBankOperations.WithdrawAmountResponse;
-import com.cognologix.bankingApplication.dto.responsesForCustomerOperations.TransactionStatementResponse;
+import com.cognologix.bankingApplication.dto.Responses.CustomerOperations.TransactionStatementResponse;
 import com.cognologix.bankingApplication.entities.Account;
 import com.cognologix.bankingApplication.entities.Customer;
 import com.cognologix.bankingApplication.entities.transactions.BankTransaction;
@@ -24,7 +18,7 @@ import com.cognologix.bankingApplication.exceptions.CustomerNotFoundException;
 import com.cognologix.bankingApplication.exceptions.DeactivateAccountException;
 import com.cognologix.bankingApplication.exceptions.IllegalTypeOfAccountException;
 import com.cognologix.bankingApplication.exceptions.InsufficientBalanceException;
-import lombok.extern.log4j.Log4j2;
+import com.cognologix.bankingApplication.services.BankOperationsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,7 +29,6 @@ import java.util.stream.Collectors;
 
 //service class for banking operations
 @Service
-@Log4j2
 public class BankOperationServiceImplementation implements BankOperationsService {
 
     @Autowired
@@ -54,7 +47,7 @@ public class BankOperationServiceImplementation implements BankOperationsService
         try {
             Account accountToSave = new Account();
 
-            accountToSave.setAccountID(accountDto.getAccountID());
+            accountToSave.setAccountId(accountDto.getAccountID());
             accountToSave.setStatus("Active");
             accountToSave.setBalance(accountDto.getBalance());
             accountToSave.setAccountNumber(generateAccountNumber());
@@ -68,18 +61,28 @@ public class BankOperationServiceImplementation implements BankOperationsService
             }
 
             //adding information from AccountDTO in account
-            Customer customer = customerRepository.findById(accountDto.getCustomerId()).get();
+            Customer customer = customerRepository.findByCustomerIdEquals(accountDto.getCustomerId());
             accountToSave.setCustomer(customer);
 
             //check the type account for given customer is already available or not
-            List<Account> matchingAccount = bankAccountRepository.findAll().stream().filter(account -> account.getCustomer().getCustomerId() == accountDto.getCustomerId()).filter(account -> account.getAccountType().equalsIgnoreCase(accountDto.getAccountType())).collect(Collectors.toList());
+            List<Account> matchingAccount = bankAccountRepository.findAll().stream()
+                    .filter(account -> account.getCustomer().getCustomerId() == accountDto.getCustomerId())
+                    .filter(account -> account.getAccountType().equalsIgnoreCase(accountDto.getAccountType()))
+                    .collect(Collectors.toList());
 
             //the matching account will be found then throws exception
             if (matchingAccount.isEmpty()) {
                 Account account = bankAccountRepository.save(accountToSave);
 
+                CreateAccountResponseDto createAccountResponseDto=new CreateAccountResponseDto();
+                createAccountResponseDto.setCustomerName(account.getCustomer().getCustomerName());
+                createAccountResponseDto.setAccountNumber(account.getAccountNumber());
+                createAccountResponseDto.setAccountType(account.getAccountType());
+                createAccountResponseDto.setStatus(account.getStatus());
+                createAccountResponseDto.setBalance(account.getBalance());
+                
                 //proper response after creating new account
-                CreatedAccountResponse createdAccountResponse = new CreatedAccountResponse(true,"Account created successfully...",account);
+                CreatedAccountResponse createdAccountResponse = new CreatedAccountResponse(true,"Account created successfully...",createAccountResponseDto);
 
                 //return the custom response
                 return createdAccountResponse;
@@ -92,9 +95,12 @@ public class BankOperationServiceImplementation implements BankOperationsService
         } catch (AccountAlreadyExistException exception) {
             exception.printStackTrace();
             throw new AccountAlreadyExistException(exception.getMessage());
-        } catch (Exception exception) {
+        } catch (CustomerNotFoundException exception) {
             exception.printStackTrace();
             throw new CustomerNotFoundException(exception.getMessage());
+        }catch (Exception exception) {
+            exception.printStackTrace();
+            throw new RuntimeException(exception.getMessage());
         }
     }
 
@@ -111,7 +117,6 @@ public class BankOperationServiceImplementation implements BankOperationsService
         } catch (Exception exception) {
             exception.printStackTrace();
         }
-
         return accountNumber;
     }
 
@@ -336,6 +341,7 @@ public class BankOperationServiceImplementation implements BankOperationsService
         }
     }
 
+    //deactivate account
     @Override
     public ActivateAccountResponse activateAccountByAccountNumber(Long accountNumber) {
         try {

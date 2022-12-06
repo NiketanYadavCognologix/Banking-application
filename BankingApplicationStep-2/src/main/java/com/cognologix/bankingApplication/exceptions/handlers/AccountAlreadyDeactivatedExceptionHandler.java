@@ -1,5 +1,6 @@
-package com.cognologix.bankingApplication.exceptions;
+package com.cognologix.bankingApplication.exceptions.handlers;
 
+import com.cognologix.bankingApplication.exceptions.AccountAlreadyDeactivatedException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;

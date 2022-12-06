@@ -1,4 +1,4 @@
-package com.cognologix.bankingApplication.dto;
+package com.cognologix.bankingApplication.dto.Responses;
 
 import lombok.Data;
 import java.io.Serializable;

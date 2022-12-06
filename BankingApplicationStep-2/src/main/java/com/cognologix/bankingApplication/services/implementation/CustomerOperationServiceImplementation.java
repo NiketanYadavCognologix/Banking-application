@@ -1,16 +1,17 @@
-package com.cognologix.bankingApplication.services;
+package com.cognologix.bankingApplication.services.implementation;
 
 import com.cognologix.bankingApplication.dao.BankAccountRepository;
 import com.cognologix.bankingApplication.dao.CustomerRepository;
-import com.cognologix.bankingApplication.dto.responsesForCustomerOperations.BalanceInquiryResponse;
-import com.cognologix.bankingApplication.dto.responsesForCustomerOperations.CreateCustomerResponse;
-import com.cognologix.bankingApplication.dto.responsesForCustomerOperations.CustomerUpdateResponse;
-import com.cognologix.bankingApplication.dto.responsesForCustomerOperations.GetAllCustomerResponse;
+import com.cognologix.bankingApplication.dto.Responses.CustomerOperations.BalanceInquiryResponse;
+import com.cognologix.bankingApplication.dto.Responses.CustomerOperations.CreateCustomerResponse;
+import com.cognologix.bankingApplication.dto.Responses.CustomerOperations.CustomerUpdateResponse;
+import com.cognologix.bankingApplication.dto.Responses.CustomerOperations.GetAllCustomerResponse;
 import com.cognologix.bankingApplication.entities.Account;
 import com.cognologix.bankingApplication.entities.Customer;
 import com.cognologix.bankingApplication.exceptions.AccountNotAvailableException;
 import com.cognologix.bankingApplication.exceptions.CustomerAlreadyExistException;
 import com.cognologix.bankingApplication.exceptions.CustomerNotFoundException;
+import com.cognologix.bankingApplication.services.CustomerOperationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

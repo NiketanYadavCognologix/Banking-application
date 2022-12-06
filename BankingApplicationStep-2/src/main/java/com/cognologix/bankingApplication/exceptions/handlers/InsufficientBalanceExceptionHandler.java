@@ -1,15 +1,15 @@
-package com.cognologix.bankingApplication.exceptions;
+package com.cognologix.bankingApplication.exceptions.handlers;
 
+import com.cognologix.bankingApplication.exceptions.InsufficientBalanceException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
-public class AccountNotAvailableExceptionHandler {
-
-    @ExceptionHandler(value = AccountNotAvailableException.class)
-    public ResponseEntity<String> handleAccountNotAvailableException(Exception exception){
+public class InsufficientBalanceExceptionHandler {
+    @ExceptionHandler(value = InsufficientBalanceException.class)
+    public ResponseEntity<String> handleInsufficientBalanceException(Exception exception){
         return new ResponseEntity<>("Exception : "+exception.getMessage(), HttpStatus.BAD_REQUEST);
     }
 }
